@@ -1,0 +1,20 @@
+Pour forcer l'envoi des mails via postfix avec une adresse valide "srvprod@mondomaine.com" et non "root@srvprod"
+
+1/ Editer le fichier main.cf de postfix "sudo vim /etc/postfix/main.cf"
+
+2/ Ajouter les lignes suivantes:
+smtp_generic_maps = hash:/etc/postfix/generic
+sender_canonical_maps = hash:/etc/postfix/sender_canonical
+
+3/ Créer le fichier "sudo vim /etc/postfix/generic" puis y ajouter:
+root@srvprod srvprod@mondomaine.com
+
+4/ Créer le fichier "sudo vim /etc/postfix/sender_canonical" puis y ajouter:
+root@srvprod srvprod@mondomaine.com
+
+5/ Faire un postmap "sudo postmap /etc/postfix/generic"
+
+6/ Faire un postmap "sudo postmap /etc/postfix/sender_canonical"
+
+7/ Redémarrer le serveur postfix "sudo /etc/init.d/postfix restart"
+
